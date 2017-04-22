@@ -1,0 +1,14 @@
+[Unit]
+Description=Semaphore Ansible Web Interface
+After=syslog.service
+Requires=network.target
+
+[Service]
+User={{ semaphore_service_user_name }}
+Type=forking
+ExecStart=/bin/sh -c '/usr/bin/semaphore -config {{ semaphore_config_data_dir }}/semaphore_config.json >> {{ semaphore_config_log_path }}/semaphore.log 2>&1 &'
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

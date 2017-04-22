@@ -1,0 +1,21 @@
+---
+
+
+dependencies: []
+
+galaxy_info:
+  author: TheDumbTechGuy
+  description: Bootstrap Ansible-Semaphore.
+  company: "Half Tree Labs"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.3
+  platforms:
+    - name: Ubuntu
+      versions:
+      - yakkety
+      - xenial
+  galaxy_tags:
+    - ansible-semaphore
+    - management
+    - bootstrap
+    - controller

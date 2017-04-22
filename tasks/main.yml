@@ -1,0 +1,14 @@
+---
+
+- include: dependencies.yml
+  tags:
+    - ansible_semaphore_bootstrap
+
+- include: ansible_semaphore_bootstrap.yml
+  tags:
+    - ansible_semaphore_bootstrap
+
+- include: ansible_configuration.yml
+  tags:
+    - ansible_semaphore_bootstrap
+    - ansible_configuration

@@ -1,0 +1,92 @@
+---
+  
+
+- name: ensure database is installed and configured
+  include_role:
+    name: thedumbtechguy.mariadb
+    private: yes
+  static: no
+
+- name: download and install semaphore binary
+  get_url:
+    url: 'https://github.com/ansible-semaphore/semaphore/releases/download/v{{ semaphore_version }}/semaphore_linux_amd64'
+    dest: /usr/bin/semaphore
+    owner: root
+    group: root
+    mode: 755
+
+- name: create semaphore service account
+  user:
+    name: '{{ semaphore_service_user_name }}'
+    password: '{{ semaphore_service_user_password|default(omit) }}'
+    shell: /bin/bash
+    system: yes
+  no_log: true
+
+- name: add service account to sudoers
+  lineinfile: 
+    dest: /etc/sudoers
+    insertafter: EOF
+    line: "{{ semaphore_service_user_name }} ALL=(ALL:ALL) {{ 'NOPASSWD: ALL' if semaphore_service_user_password is not defined else 'ALL' }}"
+    regexp: '^{{ semaphore_service_user_name }} .*'
+    state: present  
+  become: true
+
+- name: create required directories
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: '{{ semaphore_service_user_name }}'
+    mode: 0740
+  with_items:
+    - '{{ semaphore_config_data_dir }}'
+    - '{{ semaphore_config_log_path }}'
+
+- name: install ansible vault password file
+  copy:
+    content: '{{ semaphore_ansible_cfg_vault_password }}'
+    dest: '{{ semaphore_ansible_cfg_vault_password_file }}'
+    owner: root
+    group: '{{ semaphore_service_user_name }}'
+    mode: 0640
+
+- name: copy input file to temp
+  template: 
+    src: "semaphore.stdin.{{ semaphore_version|replace(semaphore_version.split('.')[-1], '') }}j2"
+    dest: '/tmp/semaphore.stdin'
+  changed_when: false
+
+- name: run semaphore setup
+  shell: semaphore -setup < /tmp/semaphore.stdin
+
+- shell: openssl rand -base64 32
+  register: _cookie_hash
+  changed_when: false
+
+- shell: openssl rand -base64 32
+  register: _cookie_encryption
+  changed_when: false
+
+- name: update configuration file
+  template: 
+    src: 'semaphore.config.j2' 
+    dest: '{{ semaphore_config_data_dir }}/semaphore_config.json'
+    owner: root
+    group: '{{ semaphore_service_user_name }}'
+    mode: 0640
+
+- name: ensure migrations are applied
+  shell: semaphore -migrate -config {{ semaphore_config_data_dir }}/semaphore_config.json
+
+- name: semaphore service | 1. copy service definition file
+  template: 
+    src: 'semaphore.service.j2' 
+    dest: '/lib/systemd/system/semaphore.service'
+    mode: 0644
+
+- name: semaphore service | 2. enable and start service
+  systemd:
+    name: semaphore
+    enabled: yes
+    state: restarted
+    daemon_reload: yes

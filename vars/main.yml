@@ -1,0 +1,13 @@
+---
+
+mariadb_group_users:
+  - name: '{{ semaphore_db_auth_user }}'
+    password: '{{ semaphore_db_auth_password }}'
+    priv: '*.*:ALL'
+    hosts:
+      - localhost
+      - 127.0.0.1
+
+mariadb_admin_home: '{{ semaphore_db_admin_home }}'
+mariadb_admin_user: '{{ semaphore_db_admin_user }}'
+mariadb_admin_password: '{{ semaphore_db_admin_password }}'
