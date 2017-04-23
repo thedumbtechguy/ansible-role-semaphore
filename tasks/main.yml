@@ -1,14 +1,12 @@
 ---
 
 - include: dependencies.yml
+  become: true
   tags:
-    - ansible_semaphore_bootstrap
+    - semaphore
+    - semaphore-dependencies
 
-- include: ansible_semaphore_bootstrap.yml
+- include: semaphore.yml
+  become: true
   tags:
-    - ansible_semaphore_bootstrap
-
-- include: ansible_configuration.yml
-  tags:
-    - ansible_semaphore_bootstrap
-    - ansible_configuration
+    - semaphore

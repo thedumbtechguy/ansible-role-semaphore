@@ -7,17 +7,4 @@
     update_cache: true
   with_items:
     - git
-    - python-passlib
-    - python-pip
-
-- name: install required python packages
-  pip: 
-    name: '{{ item }}'
-  with_items:
-    - cryptography
-
-- name: install required galaxy roles
-  command: ansible-galaxy install {{ item }}
-  with_items:
-    - thedumbtechguy.mariadb
-    - thedumbtechguy.logrotate
+    - openssl

@@ -1,11 +1,5 @@
 ---
-  
 
-- name: ensure database is installed and configured
-  include_role:
-    name: thedumbtechguy.mariadb
-    private: yes
-  static: no
 
 - name: download and install semaphore binary
   get_url:
@@ -42,14 +36,6 @@
     - '{{ semaphore_config_data_dir }}'
     - '{{ semaphore_config_log_path }}'
 
-- name: install ansible vault password file
-  copy:
-    content: '{{ semaphore_ansible_cfg_vault_password }}'
-    dest: '{{ semaphore_ansible_cfg_vault_password_file }}'
-    owner: root
-    group: '{{ semaphore_service_user_name }}'
-    mode: 0640
-
 - name: copy input file to temp
   template: 
     src: "semaphore.stdin.{{ semaphore_version|replace(semaphore_version.split('.')[-1], '') }}j2"
@@ -77,6 +63,7 @@
 
 - name: ensure migrations are applied
   shell: semaphore -migrate -config {{ semaphore_config_data_dir }}/semaphore_config.json
+  changed_when: false
 
 - name: semaphore service | 1. copy service definition file
   template: 
@@ -90,9 +77,3 @@
     enabled: yes
     state: restarted
     daemon_reload: yes
-
-- name: ensure logrotate is installed and configured
-  include_role:
-    name: thedumbtechguy.logrotate
-    private: yes
-  static: no

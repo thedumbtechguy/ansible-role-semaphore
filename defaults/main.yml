@@ -4,8 +4,8 @@
 semaphore_version: 2.3.0
 semaphore_port: 3000
 
-semaphore_db_admin_home: '/root'
-semaphore_db_admin_user: admin
+# semaphore_db_admin_home: '/root'
+# semaphore_db_admin_user: admin
 # semaphore_db_admin_password: 
 
 semaphore_db_name: semaphore
@@ -49,8 +49,8 @@ semaphore_service_user_name: semaphore
 # semaphore_service_user_password
 
 
-semaphore_ansible_cfg_host_key_checking: False
-semaphore_ansible_cfg_ansible_managed: 'DO NOT MODIFY by hand. This file is under control of Ansible on {host}.'
-semaphore_ansible_cfg_vault_password_file: '{{ semaphore_config_data_dir }}/.vpf'
-# semaphore_ansible_cfg_vault_password
+# semaphore_ansible_cfg_host_key_checking: False
+# semaphore_ansible_cfg_ansible_managed: 'DO NOT MODIFY by hand. This file is under control of Ansible on {host}.'
+# semaphore_ansible_cfg_vault_password: ''
+# semaphore_ansible_cfg_vault_password_file: '/var/lib/semaphore/.vpf'
 
