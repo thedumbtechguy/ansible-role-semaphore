@@ -20,3 +20,4 @@
   command: ansible-galaxy install {{ item }}
   with_items:
     - thedumbtechguy.mariadb
+    - thedumbtechguy.logrotate

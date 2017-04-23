@@ -83,10 +83,16 @@
     src: 'semaphore.service.j2' 
     dest: '/lib/systemd/system/semaphore.service'
     mode: 0644
-
+  
 - name: semaphore service | 2. enable and start service
   systemd:
     name: semaphore
     enabled: yes
     state: restarted
     daemon_reload: yes
+
+- name: ensure logrotate is installed and configured
+  include_role:
+    name: thedumbtechguy.logrotate
+    private: yes
+  static: no

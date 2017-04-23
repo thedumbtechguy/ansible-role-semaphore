@@ -11,3 +11,16 @@ mariadb_group_users:
 mariadb_admin_home: '{{ semaphore_db_admin_home }}'
 mariadb_admin_user: '{{ semaphore_db_admin_user }}'
 mariadb_admin_password: '{{ semaphore_db_admin_password }}'
+
+logrotate_conf_scripts:
+  - name: semaphore
+    path: /var/log/semaphore/*.log
+    options:
+      - rotate 14
+      - daily
+      - compress
+      - delaycompress
+      - sharedscripts
+      - missingok
+    postrotate:
+      - /usr/sbin/service semaphore restart
