@@ -107,24 +107,21 @@ EOL
         postrotate:
           - /usr/sbin/service semaphore restart
     
-    configure_self_vault_password: '{{ semaphore_ansible_cfg_vault_password}}'
-    configure_self_vault_password_file: '{{ semaphore_ansible_cfg_vault_password_file }}'
-    configure_self_vault_password_file_owner: root
-    configure_self_vault_password_file_group: '{{ semaphore_service_user_name }}'
-    configure_self_vault_password_file_permissions: 0640
-    configure_self_config_defaults:
-      - name: host_key_checking
-        value: '{{ semaphore_ansible_cfg_host_key_checking }}'
-      - name: ansible_managed
-        value: 'DO NOT MODIFY by hand. This file is under control of Ansible on {host}.'
-      - name: vault_password_file
-        value: '{{ semaphore_ansible_cfg_vault_password_file }}'
-
+    configure_ansible_vault_password: '{{ semaphore_ansible_cfg_vault_password}}'
+    configure_ansible_vault_password_file: '{{ semaphore_ansible_cfg_vault_password_file }}'
+    configure_ansible_vault_password_file_owner: root
+    configure_ansible_vault_password_file_group: '{{ semaphore_service_user_name }}'
+    configure_ansible_vault_password_file_permissions: 0640
+    configure_ansible_config_items:
+      defaults:
+        - { name: "host_key_checking", value: "{{ semaphore_ansible_cfg_host_key_checking }}" }
+        - { name: "ansible_managed", value: "DO NOT MODIFY by hand. This file is under control of Ansible on {host}." }
+        - { name: "vault_password_file", value: "{{ semaphore_ansible_cfg_vault_password_file }}" }
   roles:
     - thedumbtechguy.mariadb
     - thedumbtechguy.semaphore
     - thedumbtechguy.logrotate
-    - thedumbtechguy.configure-self
+    - thedumbtechguy.configure-ansible
 EOL
     
     echo "Init complete. You can customize the variables by updating './vars.json'."
@@ -151,7 +148,7 @@ if [ "$1" = "execute" ]; then
         ansible-galaxy install thedumbtechguy.mariadb &&
         ansible-galaxy install thedumbtechguy.semaphore &&
         ansible-galaxy install thedumbtechguy.logrotate &&
-        ansible-galaxy install thedumbtechguy.configure-self &&
+        ansible-galaxy install thedumbtechguy.configure-ansible &&
 
         touch .g
     fi
