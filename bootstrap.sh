@@ -112,7 +112,7 @@ EOL
         path: '{{ semaphore_ansible_cfg_vault_password_file }}'
         owner: 'root'
         group: '{{ semaphore_service_user_name }}'
-        permissions: 0640
+        permissions: '0640'
     configure_ansible_config_items:
       defaults:
         - { name: "host_key_checking", value: "{{ semaphore_ansible_cfg_host_key_checking }}" }
