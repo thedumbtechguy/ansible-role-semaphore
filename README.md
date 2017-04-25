@@ -7,8 +7,9 @@ This role contains a shell script to bootstrap ansible and semaphore. It handles
 ## Requirements
 
 - wget: Required to download `bootstrap.sh`.
-- [thedumbtechguy.mariadb](https://galaxy.ansible.com/thedumbtechguy/mariadb/): Required to setup mariadb. Installed if not available.
+- [thedumbtechguy.configure-ansible](https://galaxy.ansible.com/thedumbtechguy/configure-ansible/): Required to setup ansible. Installed if not available.
 - [thedumbtechguy.logrotate](https://galaxy.ansible.com/thedumbtechguy/logrotate/): Required to setup logrotate. Installed if not available.
+- [thedumbtechguy.mariadb](https://galaxy.ansible.com/thedumbtechguy/mariadb/): Required to setup mariadb. Installed if not available.
 
 > This role has been tested on `Ubuntu 16.04` and `Ubuntu 16.10` only.
 
