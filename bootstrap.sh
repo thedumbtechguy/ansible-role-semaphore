@@ -108,10 +108,11 @@ EOL
           - /usr/sbin/service semaphore restart
     
     configure_ansible_vault_password: '{{ semaphore_ansible_cfg_vault_password}}'
-    configure_ansible_vault_password_file: '{{ semaphore_ansible_cfg_vault_password_file }}'
-    configure_ansible_vault_password_file_owner: root
-    configure_ansible_vault_password_file_group: '{{ semaphore_service_user_name }}'
-    configure_ansible_vault_password_file_permissions: 0640
+    configure_ansible_vault_password_file: 
+        path: '{{ semaphore_ansible_cfg_vault_password_file }}'
+        owner: 'root'
+        group: '{{ semaphore_service_user_name }}'
+        permissions: 0640
     configure_ansible_config_items:
       defaults:
         - { name: "host_key_checking", value: "{{ semaphore_ansible_cfg_host_key_checking }}" }
