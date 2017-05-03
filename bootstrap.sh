@@ -34,7 +34,7 @@ if [ "$1" = "init" ]; then
     "semaphore_db_name": "semaphore",
     "semaphore_db_auth_user": "semaphore",
     "semaphore_db_auth_password": "$semaphore_db_auth_password", # required
-    semaphore_db_auth_privileges: "*.*:ALL",
+    "semaphore_db_auth_privileges": "*.*:ALL",
 
     "semaphore_config_data_dir": "/var/lib/semaphore",
     "semaphore_config_log_path": "/var/log/semaphore",
