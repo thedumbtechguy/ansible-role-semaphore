@@ -14,7 +14,7 @@ semaphore_db_auth_user: semaphore
 semaphore_db_auth_privileges: '*.*:ALL'
 
 semaphore_config_auth_name: Admin
-semaphore_config_auth_email: root@localhost
+semaphore_config_auth_email: root
 semaphore_config_auth_username: admin
 # semaphore_config_auth_password: semaphore
 

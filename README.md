@@ -51,7 +51,7 @@ You can then customize the configuration in `vars.json` and run `sudo sh bootstr
 - `semaphore_config_auth_name`: the name of the default semaphore application user.
   - Default: `Admin`
 - `semaphore_config_auth_email`: the email of the default semaphore application user.
-  - Default: `root@localhost`
+  - Default: `root`
 - `semaphore_config_auth_username`: the user of the default semaphore application user.
   - Default: `admin`
 - `semaphore_config_auth_password`: the password of the default semaphore application user.
